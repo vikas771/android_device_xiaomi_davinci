@@ -241,6 +241,7 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
     oneshot
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.rmt_storage /vendor/bin/rmt_storage
     class core
@@ -256,11 +257,13 @@ service vendor.sensors /vendor/bin/sscrpcd sensorspd
     class early_hal
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
     user system
     group system
+    writepid /dev/cpuset/system-background/tasks
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -O/data/vendor/wifi/wpa/sockets -puse_p2p_group_interface=1 -dd \
@@ -282,6 +285,7 @@ service vendor.cnss-daemon /vendor/bin/cnss-daemon -n -l
     user system
     group system inet net_admin wifi
     capabilities NET_ADMIN
+    writepid /dev/cpuset/system-background/tasks
 
 on property:sys.shutdown.requested=*
     write /sys/kernel/shutdown_wlan/shutdown 1
@@ -291,6 +295,7 @@ service vendor.loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
     group gps
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.qcom-sh /vendor/bin/init.qcom.sh
     class late_start
