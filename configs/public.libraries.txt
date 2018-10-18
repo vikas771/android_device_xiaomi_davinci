@@ -18,7 +18,6 @@ libmialgoengine.so
 libmibokeh_712.so
 libmpbase.so
 libOpenCL.so
-libqti-perfd-client.so
 libsdsprpc.so
 libVDClearShot.so
 libVDSuperPhotoAPI.so
