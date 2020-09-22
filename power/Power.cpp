@@ -40,7 +40,7 @@ Return<void> Power::powerHint(PowerHint_1_0, int32_t) {
 }
 
 bool isSupportedInputName(char* name) {
-    return strcmp(name, "goodix_ts") == 0;
+    return false;
 }
 
 int openInputFd() {
