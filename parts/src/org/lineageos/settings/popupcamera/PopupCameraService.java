@@ -141,6 +141,11 @@ public class PopupCameraService extends Service implements Handler.Callback {
                     || status == Constants.MOTOR_STATUS_TAKEBACK_JAMMED) {
                 mMotor.takebackMotor(1);
             }
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException e) {
+                // Do nothing
+            }
             mMotorStatusCallback = new MotorStatusCallback();
             mMotor.setMotorCallback(mMotorStatusCallback);
         } catch (RemoteException e) {
