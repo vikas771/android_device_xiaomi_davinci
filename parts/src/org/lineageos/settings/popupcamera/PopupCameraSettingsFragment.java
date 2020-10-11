@@ -17,20 +17,33 @@
 package org.lineageos.settings.popupcamera;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.Preference.OnPreferenceClickListener;
 import androidx.preference.PreferenceFragment;
 
 import org.lineageos.settings.R;
 
 public class PopupCameraSettingsFragment
-        extends PreferenceFragment implements OnPreferenceChangeListener {
+        extends PreferenceFragment implements OnPreferenceChangeListener,OnPreferenceClickListener {
+
+    private static final String TAG = "PopupCameraSettingsFragment";
+
+    private Preference mCalibrationPreference;
+    private static final String MOTOR_CALIBRATION_KEY = "motor_calibration";
+
+    PopupCameraService mPopupCameraService = new PopupCameraService();
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.popup_settings);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mCalibrationPreference = (Preference) findPreference(MOTOR_CALIBRATION_KEY);
+        mCalibrationPreference.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -42,6 +55,16 @@ public class PopupCameraSettingsFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             getActivity().onBackPressed();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onPreferenceClick (Preference preference) {
+        if (MOTOR_CALIBRATION_KEY.equals(preference.getKey())) {
+            Log.d(TAG, "onPreferenceClick noticed a click from MOTOR_CALIBRATION_KEY");
+            mPopupCameraService.calibrateMotor();
             return true;
         }
         return false;
